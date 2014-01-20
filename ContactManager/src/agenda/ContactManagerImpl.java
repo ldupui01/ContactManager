@@ -87,6 +87,14 @@ public class ContactManagerImpl implements ContactManager {
 		}*****************/
 	}
 	
+	public <E> void iteratorTest(Set<E> e){
+		Iterator<E> it = e.iterator();
+		while (it.hasNext()){
+			E obj = it.next();
+			System.out.println(obj.toString());
+		}
+	}
+	
 	public Calendar setDate(String s){
 	    int year = Integer.parseInt(s.substring(6, 10));
 	    int month = (Integer.parseInt(s.substring(3, 4))) - 1; // -1 because the month start at 0 for January
@@ -105,7 +113,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	public Set<ContactImpl> setMeetingContact(String s){
-		System.out.println("input " + s);
+		//System.out.println("input " + s);
 		Set<ContactImpl> setMeetCont = new HashSet();
 		int contactId=-1;
 		int tagIndex = 0;
@@ -125,7 +133,7 @@ public class ContactManagerImpl implements ContactManager {
 				//System.out.println(contactId);
 			}
 		}while (!stop);
-	
+		System.out.println();
 		return setMeetCont;
 	}
 
