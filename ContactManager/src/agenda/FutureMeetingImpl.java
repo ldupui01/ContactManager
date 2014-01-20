@@ -2,10 +2,11 @@ package agenda;
 
 import java.util.Calendar;
 import java.util.Set;
+import java.util.HashSet;
 
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting {
 
-	public FutureMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
+	public FutureMeetingImpl(int mUID, Calendar mDate, Set<ContactImpl> mContacts){
 		super(mUID, mDate, mContacts);
 	}
 	

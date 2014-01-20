@@ -1,0 +1,12 @@
+Alala
+<#USER_ID:6478:USER_ID#>
+<#LIST:Contact:LIST#> <#INFO:cUID,cName,cNote:INFO#>
+<#ID:25:ID#><#NAME:John Alstin:NAME#><#NOTE:interesting guy and nice to talk to:NOTE#>
+<#ID:12:ID#><#NAME:Greg M. Aldwin:NAME#><#NOTE:"rich fellow, difficult to negociate":NOTE#>
+<#ID:12:ID#><#NAME:Greg M. Aldwin2:NAME#><#NOTE:"rich fellow, difficult to negociate":NOTE#>
+<#ID:789:ID#><#NAME:M. Parkinson:NAME#><#NOTE:always forgot his umbrella":NOTE#>
+<#List:Meeting:LIST#> <#INFO:mID,mDate,mContacts,mNote:INFO#>
+<#ID:6:ID#><#DATE:05/01/2012:DATE#>,<#WITH:25,12:WITH#>,<#NOTE:"difficult and argumentative":NOTE#>
+<#ID:69:ID#><#DATE:14/02/2013:DATE#>,<#WITH:789:WITH#>,<#NOTE:"in the right direction, nothing to fear":NOTE#>
+<#ID:1548:ID#><#DATE:15/09/2014:DATE#>,<#WITH:12:WITH#>
+<#ID:754:ID#><#DATE:12/08/2014:DATE#>,<#WITH:789,25:WITH#>

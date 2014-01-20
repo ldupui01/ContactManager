@@ -13,7 +13,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	
 	private String mNote;
 	
-	public PastMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts, String mNote){
+	public PastMeetingImpl(int mUID, Calendar mDate, Set<ContactImpl> mContacts, String mNote){
 		super(mUID, mDate, mContacts);
 		this.mNote = mNote;
 	}

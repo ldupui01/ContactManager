@@ -2,6 +2,7 @@ package agenda;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class MeetingImpl implements Meeting {
@@ -19,9 +20,9 @@ public class MeetingImpl implements Meeting {
 	/**
 	 * The list of contact present to the meeting
 	 */
-	private Set<Contact> mContacts;
+	private Set<ContactImpl> mContacts;
 
-	public MeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
+	public MeetingImpl(int mUID, Calendar mDate, Set<ContactImpl> mContacts){
 		this.mUID = mUID;
 		this.mDate = mDate;
 		this.mContacts = mContacts;
@@ -39,7 +40,9 @@ public class MeetingImpl implements Meeting {
 
 	@Override
 	public Set<Contact> getContacts() {
-		return this.mContacts;
+		Set<Contact> set = new HashSet<Contact>();
+		return set;
+		//return this.mContacts;
 	}
 
 }

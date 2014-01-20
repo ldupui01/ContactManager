@@ -22,24 +22,9 @@ public class ContactManagerImpl implements ContactManager {
 	
 	public void  readTextFile(){
 		TextReader tr = new TextReader();
-		this.stringImport= tr.reader("..\\Agenda.csv");
+		this.stringImport= tr.reader("..\\contacts.txt");
 		this.createSets(this.stringImport);
-	}	
-/* TEST to be deleted***************************
-		this.affiche(this.stringImport);
 	}
-	
-	public void affiche (ArrayList<String[]> stringImport){
-		String[] result = null;
-		for(int i = 0;i<this.stringImport.size();i++){
-			String display = "";
-			result = stringImport.get(i);
-			for (int j = 0; j<5;j++){
-				display = display + " " + result[j];
-			}System.out.println(display);
-		}
-	}
-//end TEST ****************************************/
 	
 	public void createSets(ArrayList<String[]> al){
 		String[] strImport = null;
@@ -53,7 +38,7 @@ public class ContactManagerImpl implements ContactManager {
 			strImport = al.get(i);
 			if (strImport[0] != null){
 				switch (strImport[4]){
-				case("Contact") :
+				case("Contact"):
 					uid = Integer.parseInt(strImport[0]);
 					name = strImport[1];
 					note = strImport[2];
@@ -65,12 +50,14 @@ public class ContactManagerImpl implements ContactManager {
 					//System.out.println(setContact.size());
 //*******************
 					break;
-				case("Meeting")	:
+				case("Meeting"):
 					uid = Integer.parseInt(strImport[0]);
 					date = strImport[1];
 					time = this.setDate(date);
 					with = strImport[2];
-					Set<ContactImpl> setMeetingContact = setMeetingContact(with);
+					Set<ContactImpl> setMeetingContact = this.setMeetingContact(with);
+					MeetingImpl meeting = new MeetingImpl(uid, time, setMeetingContact);
+					this.setMeeting.add(meeting);
 					note = strImport[3];
 					
 					break;
@@ -87,21 +74,22 @@ public class ContactManagerImpl implements ContactManager {
 		}*****************/
 	}
 	
-	public ContactImpl retriveContact(int id){
-		ContactImpl ci = null;
-		for (ContactImpl obj : this.setContact){
-			if (obj.equals(id))
-				ci = obj;
-		}
-		return ci;
-	}
-	
 	public <E> void iteratorTest(Set<E> e){
 		Iterator<E> it = e.iterator();
 		while (it.hasNext()){
 			E obj = it.next();
 			System.out.println(obj.toString());
 		}
+	}
+	
+	
+	public ContactImpl retriveContact(int id, Set<ContactImpl> set){
+		ContactImpl ci = null;
+		for (ContactImpl obj : set){
+			if (obj.equals(id))
+				ci = obj;
+		}
+		return ci;
 	}
 	
 	public Calendar setDate(String s){
@@ -116,13 +104,12 @@ public class ContactManagerImpl implements ContactManager {
 	  /*cal.set(Calendar.YEAR, year);
 	    cal.set(Calendar.MONTH, month);
 	    cal.set(Calendar.DATE, date);
-	 */   
-	   // System.out.println(cal.getTime());
+	    System.out.println(cal.getTime());
+	 */    
 		return cal;
 	}
 	
 	public Set<ContactImpl> setMeetingContact(String s){
-		//System.out.println("input " + s);
 		Set<ContactImpl> setMeetCont = new HashSet();
 		int contactId=-1;
 		int tagIndex = 0;
@@ -130,22 +117,17 @@ public class ContactManagerImpl implements ContactManager {
 		boolean stop = false;
 		do {
 			tagEndIndex = s.indexOf(",",tagIndex);
-			//System.out.println(tagEndIndex);
 			if (tagEndIndex>0){
-				//System.out.println(s.substring(tagIndex, tagEndIndex));
 				contactId = Integer.parseInt(s.substring(tagIndex, tagEndIndex));
 				tagIndex = tagEndIndex+1;
-				
-				//System.out.println(contactId);
+				setMeetCont.add(this.retriveContact(contactId,setContact));
 			}else{
 				contactId = Integer.parseInt(s.substring(tagIndex, s.length()));
+				setMeetCont.add(this.retriveContact(contactId,setContact));
 				stop = true;
-				//System.out.println(contactId);
 			}
 		}while (!stop);
-		
-		
-		this.iteratorTest(setMeetCont);
+		//this.iteratorTest(setMeetCont);
 		return setMeetCont;
 	}
 
@@ -221,6 +203,14 @@ public class ContactManagerImpl implements ContactManager {
 	public Set<Contact> getContacts(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Set<Contact> modifySet(Set<ContactImpl> set){
+		Set<Contact> absSet = new HashSet();
+		
+		//absSet.add(set);
+		// make absSet = set !?!?!?!?!?!
+		return absSet;
 	}
 
 	@Override
