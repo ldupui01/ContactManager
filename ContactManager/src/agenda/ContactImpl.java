@@ -48,6 +48,12 @@ public class ContactImpl implements Contact {
 			return false;
 		return true;
 	}
+	
+	public boolean equals(int id){
+		if(this.cUID == id)
+			return true;
+		return false;
+	}
 
 
 	@Override

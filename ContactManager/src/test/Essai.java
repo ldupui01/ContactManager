@@ -22,6 +22,9 @@ public class Essai {
 	    System.out.println("Current Month is : " + (now.get(Calendar.MONTH) + 1));
 	    System.out.println("Current Date is : " + now.get(Calendar.DATE));
 	    */
+		
+		cmi.retriveContact(789);
+		
 	}
 
 }

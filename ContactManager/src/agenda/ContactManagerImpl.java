@@ -87,6 +87,15 @@ public class ContactManagerImpl implements ContactManager {
 		}*****************/
 	}
 	
+	public ContactImpl retriveContact(int id){
+		ContactImpl ci = null;
+		for (ContactImpl obj : this.setContact){
+			if (obj.equals(id))
+				ci = obj;
+		}
+		return ci;
+	}
+	
 	public <E> void iteratorTest(Set<E> e){
 		Iterator<E> it = e.iterator();
 		while (it.hasNext()){
@@ -126,6 +135,7 @@ public class ContactManagerImpl implements ContactManager {
 				//System.out.println(s.substring(tagIndex, tagEndIndex));
 				contactId = Integer.parseInt(s.substring(tagIndex, tagEndIndex));
 				tagIndex = tagEndIndex+1;
+				
 				//System.out.println(contactId);
 			}else{
 				contactId = Integer.parseInt(s.substring(tagIndex, s.length()));
@@ -133,7 +143,9 @@ public class ContactManagerImpl implements ContactManager {
 				//System.out.println(contactId);
 			}
 		}while (!stop);
-		System.out.println();
+		
+		
+		this.iteratorTest(setMeetCont);
 		return setMeetCont;
 	}
 
