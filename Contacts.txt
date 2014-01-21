@@ -1,10 +1,10 @@
 Alala
 <#USER_ID:6478:USER_ID#>
 <#LIST:Contact:LIST#> <#INFO:cUID,cName,cNote:INFO#>
-<#ID:25:ID#><#NAME:John Alstin:NAME#><#NOTE:interesting guy and nice to talk to:NOTE#>
+<#ID:1:ID#><#NAME:John Alstin:NAME#><#NOTE:interesting guy and nice to talk to:NOTE#>
 <#ID:12:ID#><#NAME:Greg M. Aldwin:NAME#><#NOTE:"rich fellow, difficult to negociate":NOTE#>
 <#ID:87:ID#><#NAME:John Arqui:NAME#><#NOTE:cheap guy argumentative:NOTE#>
-<#ID:12:ID#><#NAME:Greg M. Aldwin2:NAME#><#NOTE:"rich fellow, difficult to negociate":NOTE#>
+<#ID:2:ID#><#NAME:Greg M. Aldwin2:NAME#><#NOTE:"rich fellow, difficult to negociate":NOTE#>
 <#ID:789:ID#><#NAME:M. Parkinson:NAME#><#NOTE:always forgot his umbrella":NOTE#>
 <#List:Meeting:LIST#> <#INFO:mID,mDate,mContacts,mNote:INFO#>
 <#ID:6:ID#><#DATE:05/01/2012:DATE#>,<#WITH:25,12:WITH#>,<#NOTE:"difficult and argumentative":NOTE#>

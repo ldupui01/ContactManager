@@ -40,9 +40,9 @@ public class MeetingImpl implements Meeting {
 
 	@Override
 	public Set<Contact> getContacts() {
-		Set<Contact> set = new HashSet<Contact>();
-		return set;
-		//return this.mContacts;
+		//Set<Contact> set = new HashSet<Contact>();
+		//return set;
+		return this.mContacts;
 	}
 
 }

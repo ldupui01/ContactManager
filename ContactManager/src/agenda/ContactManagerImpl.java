@@ -13,13 +13,18 @@ public class ContactManagerImpl implements ContactManager {
 	private Set<Contact> setContact;
 	private Set<ContactImpl> setContactImpl;
 	private Set<Meeting> setMeeting;
-	
+	private Set<MeetingImpl> setMeetingImpl;
+	private Set<PastMeetingImpl> setPastMeetingImpl;
+	private Set<FutureMeetingImpl> setFutureMeetingImpl;
 	
 	public ContactManagerImpl(){
 		this.stringImport=null;
-		this.setMeeting = new HashSet();
-		this.setContact = new HashSet();
+		this.setMeeting = new HashSet<Meeting>();
+		this.setMeetingImpl = new HashSet();
+		this.setContact = new HashSet<Contact>();
 		this.setContactImpl = new HashSet();
+		this.setPastMeetingImpl  = new HashSet();
+		this.setFutureMeetingImpl  = new HashSet();
 	}
 	
 	public void  readTextFile(){
@@ -57,7 +62,12 @@ public class ContactManagerImpl implements ContactManager {
 					Set<Contact> setMeetingContact = this.setMeetingContact(with);
 					Meeting meeting = new MeetingImpl(uid, time, setMeetingContact);
 					this.setMeeting.add(meeting);
+					MeetingImpl meetingImpl = new MeetingImpl(uid, time, setMeetingContact);
+					this.setMeetingImpl.add(meetingImpl);
 					note = strImport[3];
+/*
+ * set future meeting and past meeting	HERE ... use date compare !!!				
+ */
 					break;
 				default:
 					break;
@@ -77,10 +87,10 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	public Contact retriveContact(int id, Set<Contact> set){
-		Contact ci = new ContactImpl(0,"","");
+		Contact ci =  new ContactImpl(0,"","");
 		for (Contact obj : set){
 			if (obj.equals(id))
-				ci = obj;
+				 ci = obj;
 		}
 		return ci;
 	}
@@ -89,16 +99,19 @@ public class ContactManagerImpl implements ContactManager {
 	    int year = Integer.parseInt(s.substring(6, 10));
 	    int month = (Integer.parseInt(s.substring(3, 4))) - 1; // -1 because the month start at 0 for January
 	    int date = Integer.parseInt(s.substring(0, 1));
-
 	    Calendar cal = Calendar.getInstance();
 	    cal.clear();
 	    cal.set(year, month, date);
-   
 		return cal;
 	}
 	
+	public Calendar today(){
+		Calendar today =  Calendar.getInstance();
+		return today;
+	}
+	
 	public Set<Contact> setMeetingContact(String s){
-		Set<Contact> setMeetCont = new HashSet();
+		Set<Contact> setMeetCont = new HashSet<Contact>();
 		setMeetCont.clear();
 		int contactId=-1;
 		int tagIndex = 0;
@@ -118,12 +131,58 @@ public class ContactManagerImpl implements ContactManager {
 		}while (!stop);
 		return setMeetCont;
 	}
+	
+	public int findId (String s){
+		int id = 0;
+		boolean check = true;
+		if (s == "contact"){
+			do{
+				check = true;
+				id++;
+				Iterator<ContactImpl> it = setContactImpl.iterator();
+				while (it.hasNext()){
+					ContactImpl obj = it.next();
+					if(obj.getId()==id){
+						check = false;
+					}
+				}	
+			}while(!check);
+		}else if(s == "meeting"){
+			do{
+				check = true;
+				id++;
+				Iterator<MeetingImpl> it = setMeetingImpl.iterator();
+				while (it.hasNext()){
+					MeetingImpl obj = it.next();
+					if(obj.getId()==id){
+						check = false;
+					}
+				}	
+			}while(!check);
+		}
+		return id;
+	}
 
 	
 	@Override
-	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
+	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException{
 		// TODO Auto-generated method stub
-		return 0;
+		int id = findId("meeting");
+		Calendar today =  Calendar.getInstance();
+		if (date.compareTo(today)<0){
+			throw new IllegalArgumentException("You can not set a futur meeting in the past");
+		}
+		if ( (contacts==null) || (!this.setContact.containsAll(contacts)) ) {
+            throw new IllegalArgumentException("you did set unvalid contact or none for this meeting");
+    }
+		Meeting meeting = new MeetingImpl(id, date, contacts);
+		this.setMeeting.add(meeting);
+		MeetingImpl meetingImpl = new MeetingImpl(id, date, contacts);
+		this.setMeetingImpl.add(meetingImpl);
+		FutureMeetingImpl futuremeetingImpl = new FutureMeetingImpl(id, date, contacts);
+		this.setFutureMeetingImpl.add(futuremeetingImpl);
+		
+		return id;
 	}
 
 	@Override

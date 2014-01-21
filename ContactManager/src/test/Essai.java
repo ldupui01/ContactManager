@@ -16,7 +16,10 @@ public class Essai {
 	private void launch() {
 		ContactManagerImpl cmi = new ContactManagerImpl();
 		cmi.readTextFile();
+		//Calendar cal = cmi.today();
+		//System.out.println(cal.getTime());
 		
+		System.out.println(cmi.findId("meeting"));
 	}
 
 }
