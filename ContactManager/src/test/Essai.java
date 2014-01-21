@@ -1,6 +1,8 @@
 package test;
 
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Set;
 
 import agenda.ContactManagerImpl;
 
@@ -14,16 +16,6 @@ public class Essai {
 	private void launch() {
 		ContactManagerImpl cmi = new ContactManagerImpl();
 		cmi.readTextFile();
-		
-		/*Calendar now = Calendar.getInstance();
-	    // 
-	    System.out.println("Current Year is : " + now.get(Calendar.YEAR));
-	    // month start from 0 to 11
-	    System.out.println("Current Month is : " + (now.get(Calendar.MONTH) + 1));
-	    System.out.println("Current Date is : " + now.get(Calendar.DATE));
-	    */
-		
-		
 		
 	}
 

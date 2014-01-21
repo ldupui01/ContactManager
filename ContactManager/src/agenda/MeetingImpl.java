@@ -20,9 +20,9 @@ public class MeetingImpl implements Meeting {
 	/**
 	 * The list of contact present to the meeting
 	 */
-	private Set<ContactImpl> mContacts;
+	private Set<Contact> mContacts;
 
-	public MeetingImpl(int mUID, Calendar mDate, Set<ContactImpl> mContacts){
+	public MeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
 		this.mUID = mUID;
 		this.mDate = mDate;
 		this.mContacts = mContacts;

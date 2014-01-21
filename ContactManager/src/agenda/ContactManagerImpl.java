@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class ContactManagerImpl implements ContactManager {
 	private ArrayList<String[]> stringImport;
-	private Set<ContactImpl> setContact;
+	private Set<Contact> setContact;
+	private Set<ContactImpl> setContactImpl;
 	private Set<Meeting> setMeeting;
 	
 	
@@ -18,6 +19,7 @@ public class ContactManagerImpl implements ContactManager {
 		this.stringImport=null;
 		this.setMeeting = new HashSet();
 		this.setContact = new HashSet();
+		this.setContactImpl = new HashSet();
 	}
 	
 	public void  readTextFile(){
@@ -42,50 +44,41 @@ public class ContactManagerImpl implements ContactManager {
 					uid = Integer.parseInt(strImport[0]);
 					name = strImport[1];
 					note = strImport[2];
-					ContactImpl contact = new ContactImpl(uid,name,note);
+					Contact contact = new ContactImpl(uid,name,note);
 					this.setContact.add(contact);
-//****************
-					//System.out.println(contact.hashCode());
-					//System.out.println(contact.getName());
-					//System.out.println(setContact.size());
-//*******************
+					ContactImpl contactImpl = new ContactImpl(uid,name,note);
+					this.setContactImpl.add(contactImpl);
 					break;
 				case("Meeting"):
 					uid = Integer.parseInt(strImport[0]);
 					date = strImport[1];
 					time = this.setDate(date);
 					with = strImport[2];
-					Set<ContactImpl> setMeetingContact = this.setMeetingContact(with);
-					MeetingImpl meeting = new MeetingImpl(uid, time, setMeetingContact);
+					Set<Contact> setMeetingContact = this.setMeetingContact(with);
+					Meeting meeting = new MeetingImpl(uid, time, setMeetingContact);
 					this.setMeeting.add(meeting);
 					note = strImport[3];
-					
 					break;
 				default:
 					break;
 				}
 			}
 		}
-		/*******************
-		 * Iterator<ContactImpl> it = setContact.iterator();
-		while (it.hasNext()){
-			ContactImpl obj = it.next();
-			System.out.println(obj.getName());
-		}*****************/
+
 	}
 	
-	public <E> void iteratorTest(Set<E> e){
-		Iterator<E> it = e.iterator();
-		while (it.hasNext()){
-			E obj = it.next();
-			System.out.println(obj.toString());
-		}
-	}
-	
-	
-	public ContactImpl retriveContact(int id, Set<ContactImpl> set){
-		ContactImpl ci = null;
+	public ContactImpl retriveContactImpl(int id, Set<ContactImpl> set){
+		ContactImpl ci = new ContactImpl(0,"","");
 		for (ContactImpl obj : set){
+			if (obj.equals(id))
+				ci = obj;
+		}
+		return ci;
+	}
+	
+	public Contact retriveContact(int id, Set<Contact> set){
+		Contact ci = new ContactImpl(0,"","");
+		for (Contact obj : set){
 			if (obj.equals(id))
 				ci = obj;
 		}
@@ -100,17 +93,13 @@ public class ContactManagerImpl implements ContactManager {
 	    Calendar cal = Calendar.getInstance();
 	    cal.clear();
 	    cal.set(year, month, date);
-
-	  /*cal.set(Calendar.YEAR, year);
-	    cal.set(Calendar.MONTH, month);
-	    cal.set(Calendar.DATE, date);
-	    System.out.println(cal.getTime());
-	 */    
+   
 		return cal;
 	}
 	
-	public Set<ContactImpl> setMeetingContact(String s){
-		Set<ContactImpl> setMeetCont = new HashSet();
+	public Set<Contact> setMeetingContact(String s){
+		Set<Contact> setMeetCont = new HashSet();
+		setMeetCont.clear();
 		int contactId=-1;
 		int tagIndex = 0;
 		int tagEndIndex = 0;
@@ -120,14 +109,13 @@ public class ContactManagerImpl implements ContactManager {
 			if (tagEndIndex>0){
 				contactId = Integer.parseInt(s.substring(tagIndex, tagEndIndex));
 				tagIndex = tagEndIndex+1;
-				setMeetCont.add(this.retriveContact(contactId,setContact));
+				setMeetCont.add(this.retriveContact(contactId,this.setContact));
 			}else{
 				contactId = Integer.parseInt(s.substring(tagIndex, s.length()));
-				setMeetCont.add(this.retriveContact(contactId,setContact));
+				setMeetCont.add(this.retriveContact(contactId,this.setContact));
 				stop = true;
 			}
 		}while (!stop);
-		//this.iteratorTest(setMeetCont);
 		return setMeetCont;
 	}
 
@@ -178,7 +166,6 @@ public class ContactManagerImpl implements ContactManager {
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
 			String text) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -190,7 +177,6 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public void addNewContact(String name, String notes) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -203,14 +189,6 @@ public class ContactManagerImpl implements ContactManager {
 	public Set<Contact> getContacts(String name) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	public Set<Contact> modifySet(Set<ContactImpl> set){
-		Set<Contact> absSet = new HashSet();
-		
-		//absSet.add(set);
-		// make absSet = set !?!?!?!?!?!
-		return absSet;
 	}
 
 	@Override

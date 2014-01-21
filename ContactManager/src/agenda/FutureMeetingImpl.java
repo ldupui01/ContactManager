@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting {
 
-	public FutureMeetingImpl(int mUID, Calendar mDate, Set<ContactImpl> mContacts){
+	public FutureMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
 		super(mUID, mDate, mContacts);
 	}
 	
