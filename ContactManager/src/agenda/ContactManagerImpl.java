@@ -14,8 +14,8 @@ public class ContactManagerImpl implements ContactManager {
 	private Set<ContactImpl> setContactImpl;
 	private Set<Meeting> setMeeting;
 	private Set<MeetingImpl> setMeetingImpl;
-	private Set<PastMeetingImpl> setPastMeetingImpl;
-	private Set<FutureMeetingImpl> setFutureMeetingImpl;
+	private Set<PastMeeting> setPastMeeting;
+	private Set<FutureMeeting> setFutureMeeting;
 	
 	public ContactManagerImpl(){
 		this.stringImport=null;
@@ -23,8 +23,8 @@ public class ContactManagerImpl implements ContactManager {
 		this.setMeetingImpl = new HashSet();
 		this.setContact = new HashSet<Contact>();
 		this.setContactImpl = new HashSet();
-		this.setPastMeetingImpl  = new HashSet();
-		this.setFutureMeetingImpl  = new HashSet();
+		this.setPastMeeting  = new HashSet<PastMeeting>();
+		this.setFutureMeeting  = new HashSet<FutureMeeting>();
 	}
 	
 	public void  readTextFile(){
@@ -162,7 +162,23 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		return id;
 	}
+	
+	public void setPastFutureMeeting () throws IllegalArgumentException{
+		Calendar today =  Calendar.getInstance();
+		if (setMeeting.isEmpty()){
+			throw new IllegalArgumentException("No meeting has been recorded yet");
+		}else{
+			Iterator<Meeting> it = setMeeting.iterator();
+			while (it.hasNext()){
+				Meeting obj = it.next();
+				if(obj.getDate().compareTo(today)<0){
+					
+				}
+			}
+		}
+	}
 
+//************** THe interface implementation start from here ******************
 	
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException{
@@ -180,27 +196,74 @@ public class ContactManagerImpl implements ContactManager {
 		MeetingImpl meetingImpl = new MeetingImpl(id, date, contacts);
 		this.setMeetingImpl.add(meetingImpl);
 		FutureMeetingImpl futuremeetingImpl = new FutureMeetingImpl(id, date, contacts);
-		this.setFutureMeetingImpl.add(futuremeetingImpl);
+		this.setFutureMeeting.add(futuremeetingImpl);
 		
 		return id;
 	}
 
 	@Override
-	public PastMeeting getPastMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {
+		PastMeeting pm = null;
+		Iterator<FutureMeeting> itf = setFutureMeeting.iterator();
+		while (itf.hasNext()){
+			FutureMeeting obj = itf.next();
+			if (obj.getId() ==id){
+				throw new IllegalArgumentException("this id is related to a future meeting");
+			}
+		}
+		if (setPastMeeting.isEmpty()) {
+			return null;
+		}else{
+			Iterator<PastMeeting> it = setPastMeeting.iterator();
+			while (it.hasNext()){
+				PastMeeting obj = it.next();
+				if (obj.getId() ==id){
+					pm = obj;
+				}
+			}	
+			return pm;
+		}
 	}
 
 	@Override
-	public FutureMeeting getFutureMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public FutureMeeting getFutureMeeting(int id) throws IllegalArgumentException {
+		FutureMeeting fm = null;
+		Iterator<PastMeeting> itp = setPastMeeting.iterator();
+		while (itp.hasNext()){
+			PastMeeting obj = itp.next();
+			if (obj.getId() ==id){
+				throw new IllegalArgumentException("this id is related to a past meeting");
+			}
+		}
+		if (setFutureMeeting.isEmpty()) {
+			return null;
+		}else{
+			Iterator<FutureMeeting> it = setFutureMeeting.iterator();
+			while (it.hasNext()){
+				FutureMeeting obj = it.next();
+				if (obj.getId() ==id){
+					fm = obj;
+				}
+			}	
+			return fm;
+		}
 	}
 
 	@Override
 	public Meeting getMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Meeting m = null;
+		if (setMeeting.isEmpty()) {
+			return null;
+		}else{
+			Iterator<Meeting> it = setMeeting.iterator();
+			while (it.hasNext()){
+				Meeting obj = it.next();
+				if (obj.getId() ==id){
+					m = obj;
+				}
+			}	
+			return m;
+		}
 	}
 
 	@Override
