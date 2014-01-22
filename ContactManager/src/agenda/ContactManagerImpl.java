@@ -163,16 +163,28 @@ public class ContactManagerImpl implements ContactManager {
 		return id;
 	}
 	
-	public void setPastFutureMeeting () throws IllegalArgumentException{
+	public void setPastFutureMeeting (){
 		Calendar today =  Calendar.getInstance();
+		PastMeeting pm = null;
+		FutureMeeting fm = null;
+		int id = 0;
 		if (setMeeting.isEmpty()){
-			throw new IllegalArgumentException("No meeting has been recorded yet");
+			System.out.println("No meeting has been recorded yet");
 		}else{
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				if(obj.getDate().compareTo(today)<0){
-					
+				id = obj.getId();
+				if(obj.getDate().compareTo(today)<=0){
+					pm = this.getPastMeeting(id);
+					if (pm == null){
+						pm = (PastMeeting)obj;
+					}
+				}else{
+					fm = this.getFutureMeeting(id);
+					if (fm == null){
+						fm = (FutureMeeting)obj;
+					}
 				}
 			}
 		}
@@ -253,6 +265,7 @@ public class ContactManagerImpl implements ContactManager {
 	public Meeting getMeeting(int id) {
 		Meeting m = null;
 		if (setMeeting.isEmpty()) {
+			System.out.println("there is currently no meeting recorded");
 			return null;
 		}else{
 			Iterator<Meeting> it = setMeeting.iterator();
@@ -267,8 +280,14 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public List<Meeting> getFutureMeetingList(Contact contact) {
+	public List<Meeting> getFutureMeetingList(Contact contact) throws IllegalArgumentException{
 		// TODO Auto-generated method stub
+		/* create list empty 
+		 * then call the set future list 
+		 * check if contact in set contact of the meeting 
+		 * and add them to the list according to their index (to create as in past meeting)
+		 */
+		
 		return null;
 	}
 
