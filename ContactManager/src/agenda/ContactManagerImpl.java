@@ -1,5 +1,6 @@
 package agenda;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -176,29 +177,58 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Meeting> lm = new ArrayList<Meeting>();
+		if (setMeeting.isEmpty()) {
+			System.out.println("there is currently no meeting recorded");
+			return null;
+		}else{
+			Iterator<Meeting> it = setMeeting.iterator();
+			while (it.hasNext()){
+				Meeting obj = it.next();
+				if (obj.getContacts().contains(contact)) lm.add(obj);
+			}
+		}
+		return lm;
 	}
 	
 	
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Meeting> lm = new ArrayList<Meeting>();
+		if (setMeeting.isEmpty()) {
+			System.out.println("there is currently no meeting recorded");
+			return null;
+		}else{
+			Iterator<Meeting> it = setMeeting.iterator();
+			while (it.hasNext()){
+				Meeting obj = it.next();
+				if (obj.getDate().equals(date)) lm.add(obj);
+			}
+		}
+		return lm;
 	}
 
 	@Override
 	public List<PastMeeting> getPastMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PastMeeting> lm = new ArrayList<PastMeeting>();
+		if (setMeeting.isEmpty()) {
+			System.out.println("there is currently no meeting recorded");
+			return null;
+		}else{
+			Iterator<Meeting> it = setMeeting.iterator();
+			while (it.hasNext()){
+				Meeting obj = it.next();
+				if (obj.getContacts().contains(contact)) lm.add(obj);
+			}
+		}
+		return lm;
 	}
 
 	@Override
-	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
-			String text) {
+	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,String text) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
