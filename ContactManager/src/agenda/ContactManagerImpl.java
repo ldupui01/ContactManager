@@ -216,9 +216,9 @@ public class ContactManagerImpl implements ContactManager {
 			System.out.println("there is currently no meeting recorded");
 			return null;
 		}else{
-			Iterator<Meeting> it = setMeeting.iterator();
+			Iterator<PastMeeting> it = setPastMeeting.iterator();
 			while (it.hasNext()){
-				Meeting obj = it.next();
+				PastMeeting obj = it.next();
 				if (obj.getContacts().contains(contact)) lm.add(obj);
 			}
 		}
