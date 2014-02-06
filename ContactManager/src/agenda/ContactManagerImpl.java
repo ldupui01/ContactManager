@@ -260,14 +260,37 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public void addMeetingNotes(int id, String text) {
-		// TODO Auto-generated method stub
-
+	public void addMeetingNotes(int id, String text) throws NullPointerException, IllegalStateException, IllegalArgumentException{
+		boolean check = false;
+		if (text == null){
+			throw new NullPointerException("No notes were given");
+		}
+		Calendar today =  Calendar.getInstance();
+		
+		Iterator<PastMeeting> itp = setPastMeeting.iterator();
+		while (itp.hasNext()){
+			PastMeeting obj = itp.next();
+			if (obj.getId() == id){
+				if (obj.getDate().after(today)) {
+					throw new IllegalArgumentException("this meeting is set in the future. No notes allowed yet");
+				}else {
+					obj.setNotes(text);  // *************** did modify the interface to be able to update the notes .... Need to find another solution *********************
+					check = true;
+				}
+			}
+		}
+		if (!check) throw new IllegalArgumentException("No meeting is matching this ID");
 	}
 
 	@Override
-	public void addNewContact(String name, String notes) {
-		// TODO Auto-generated method stub
+	public void addNewContact(String name, String notes) throws NullPointerException{
+		boolean check = false;
+		if(name == null || notes == null){
+			check = false;
+			throw new NullPointerException("One of the argument Name or Notes was NULL");
+		}
+		
+		Contact
 
 	}
 
