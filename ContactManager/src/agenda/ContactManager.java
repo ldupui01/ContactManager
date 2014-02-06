@@ -88,8 +88,7 @@ public interface ContactManager {
 	*
 	* @param contact one of the user’s contacts
 	* @return the list of future meeting(s) scheduled with this contact (maybe empty).
-	* @throws IllegalArgumentException if the contact does not
-	exist
+	* @throws IllegalArgumentException if the contact does not exist
 	*/
 	List<PastMeeting> getPastMeetingList(Contact contact);
 	
@@ -100,8 +99,7 @@ public interface ContactManager {
 	* @param contacts a list of participants
 	* @param date the date on which the meeting took place
 	* @param text messages to be added about the meeting.
-	* @throws IllegalArgumentException if the list of contacts
-	is
+	* @throws IllegalArgumentException if the list of contacts is
 	* empty, or any of the contacts does not exist
 	* @throws NullPointerException if any of the arguments is null
 	*/

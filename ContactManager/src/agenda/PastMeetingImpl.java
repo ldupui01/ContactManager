@@ -12,11 +12,14 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	*/
 	
 	private String mNote;
+	
 	private int index;
+
 	
 	public PastMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts, String mNote){
 		super(mUID, mDate, mContacts);
 		this.mNote = mNote;
+		this.index = getSetIndex();
 	}
 
 	@Override
@@ -47,8 +50,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	}
 	
 	public int setgetIndex(){
-		Calendar date = super.getDate();
-		this.index = date.get(Calendar.YEAR)*1000 + (date.get(Calendar.MONTH)+1)*100 + date.get(Calendar.DAY_OF_MONTH);
+		int index = super.getSetIndex();
 		return index; 
 	}
 

@@ -23,7 +23,7 @@ public class ContactManagerImpl implements ContactManager {
 // *********************** TOOLS needed for method in the interface implementation ***************	
 	
 	public void Import(String fileName){
-		
+		// TODO generate method Import
 	}
 	
 	public int findId (String s){
@@ -106,7 +106,6 @@ public class ContactManagerImpl implements ContactManager {
 		
 		return id;
 	}
-	
 
 	@Override
 	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {
@@ -173,7 +172,6 @@ public class ContactManagerImpl implements ContactManager {
 			return m;
 		}
 	}
-	
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
@@ -190,8 +188,6 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		return lm;
 	}
-	
-	
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
@@ -226,8 +222,11 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,String text) {
-		// TODO Auto-generated method stub
+	public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) throws IllegalArgumentException {
+		int id = this.findId("meeting");
+		PastMeetingImpl pmi = new PastMeetingImpl(id, date, contacts, text);
+		
+		
 		
 	}
 
