@@ -252,7 +252,7 @@ public class ContactManagerImpl implements ContactManager {
 					int objID = obj.getId();
 					this.addMeetingNotes(objID, text);
 					System.out.println("this meeting was already saved, notes has been updated ");
-					check = false;
+					check = false;  
 				}
 			}
 		}
