@@ -289,14 +289,16 @@ public class ContactManagerImpl implements ContactManager {
 			check = false;
 			throw new NullPointerException("One of the argument Name or Notes was NULL");
 		}
-		
-		Contact
-
+		int cid = this.findId("contact");
+		Contact c = new ContactImpl(cid, name, notes);
+		setContact.add(c);
 	}
 
 	@Override
-	public Set<Contact> getContacts(int... ids) {
-		// TODO Auto-generated method stub
+	public Set<Contact> getContacts(int... ids) throws IllegalArgumentException{
+		for (int i=0; i<ids.length ; i++){
+			ids[i];
+		}
 		return null;
 	}
 
