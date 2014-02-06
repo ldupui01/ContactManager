@@ -222,12 +222,41 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) throws IllegalArgumentException {
+	public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) throws IllegalArgumentException, NullPointerException {
 		int id = this.findId("meeting");
+		boolean check = true;
+		if(contacts == null || date == null || text == null){
+			check = false;
+			throw new NullPointerException(" One of the argument Contact, Date or Notes was NULL");
+		}
+		
+		// ************ Checking validity of contact ************
+		if (contacts.isEmpty()) {
+			check = false;
+			throw new IllegalArgumentException("no contact was linked to the meeting");
+		}else{
+			if (!setContact.containsAll(contacts)){
+				check = false;
+				throw new IllegalArgumentException("not all contact linked to the meeting were register");
+			}
+		}
+		
 		PastMeetingImpl pmi = new PastMeetingImpl(id, date, contacts, text);
-		
-		
-		
+		if (setPastMeeting.isEmpty()){
+			setMeeting.add(pmi);
+		}else{
+			Iterator<Meeting> itm = setMeeting.iterator();
+			while (itm.hasNext()){
+				Meeting obj = itm.next();
+				if (obj.getDate().equals(date)){
+					int objID = obj.getId();
+					this.addMeetingNotes(objID, text);
+					System.out.println("this meeting was already saved, notes has been updated ");
+					check = false;
+				}
+			}
+		}
+		if (check) setMeeting.add(pmi);
 	}
 
 	@Override
