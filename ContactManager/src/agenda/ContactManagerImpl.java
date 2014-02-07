@@ -296,14 +296,28 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Set<Contact> getContacts(int... ids) throws IllegalArgumentException{
-		for (int i=0; i<ids.length ; i++){
-			ids[i];
+		Set<Contact> setCtcIds = new HashSet<Contact>();
+		if (ids.length>0){
+			for (int i=0; i<ids.length ; i++){
+				boolean check = false;
+				int id = ids[i];
+				
+				Iterator<Contact> it = setContact.iterator();
+				while (it.hasNext()){
+					Contact obj = it.next();
+					if (obj.getId() == id){
+						check = true;
+						setCtcIds.add(obj)	;
+					}
+				}
+				if (!check) throw new IllegalArgumentException("the id " + id + " did not match any registered contact");
+			}
 		}
-		return null;
+		return setCtcIds;
 	}
 
 	@Override
-	public Set<Contact> getContacts(String name) {
+	public Set<Contact> getContacts(String name) throws NullPointerException {
 		// TODO Auto-generated method stub
 		return null;
 	}
