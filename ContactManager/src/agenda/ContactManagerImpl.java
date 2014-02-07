@@ -1,5 +1,13 @@
 package agenda;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -12,12 +20,35 @@ public class ContactManagerImpl implements ContactManager {
 	private Set<Meeting> setMeeting;
 	private Set<PastMeeting> setPastMeeting;
 	private Set<FutureMeeting> setFutureMeeting;
+	private static final String EXPORTFILE = "contacts.txt";
 	
 	public ContactManagerImpl(){
-		this.setMeeting = new HashSet<Meeting>();
-		this.setContact = new HashSet<Contact>();
-		this.setPastMeeting  = new HashSet<PastMeeting>();
-		this.setFutureMeeting  = new HashSet<FutureMeeting>();
+		if(new File(EXPORTFILE).exists()){
+			try
+		      {
+		         FileInputStream fileIn = new FileInputStream(EXPORTFILE);
+		         ObjectInputStream in = new ObjectInputStream(fileIn);
+		         setContact = (Set<Contact>) in.readObject();
+		         setMeeting = (Set<Meeting>) in.readObject();
+		         setPastMeeting = (Set<PastMeeting>) in.readObject();
+		         setFutureMeeting = (Set<FutureMeeting>) in.readObject();
+		         in.close();
+		         fileIn.close();
+		      }catch(IOException i)
+		      {
+		         i.printStackTrace();
+		         return;
+		      }catch(ClassNotFoundException e)
+		      {
+		         System.out.println("Contact or Meeting class not found");
+		         e.printStackTrace();
+		      }
+		}else{
+			this.setMeeting = new HashSet<Meeting>();
+			this.setContact = new HashSet<Contact>();
+			this.setPastMeeting  = new HashSet<PastMeeting>();
+			this.setFutureMeeting  = new HashSet<FutureMeeting>();
+		}
 	}
 
 // *********************** TOOLS needed for method in the interface implementation ***************	
@@ -326,13 +357,13 @@ public class ContactManagerImpl implements ContactManager {
 	public Set<Contact> getContacts(String name) throws NullPointerException {
 		Set<Contact> setCtcName = new HashSet<Contact>();
 		if (name == null){
-			throw new NullPointerException("The given String Name was NULL");
+			throw new NullPointerException("The given String Name " + name + " was NULL");
 		}else{
 			Iterator<Contact> it = setContact.iterator();
 			while (it.hasNext()){
 				Contact obj = it.next();
 				if (obj.getName().matches("(?i).*"+ name +".*")){  // match solution case insensitive partially by Coveros Gene at http://stackoverflow.com/questions/687577/how-do-i-see-if-a-substring-exists-inside-another-string-in-java-1-4
-					setCtcName.add(obj)	;
+					setCtcName.add(obj);
 				}
 			}
 		}	
@@ -341,7 +372,25 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void flush() {
-		// TODO Auto-generated method stub
+		FileOutputStream fileOut = null;
+		ObjectOutputStream objOut = null;
+		try {
+			fileOut = new FileOutputStream(EXPORTFILE);
+			objOut = new ObjectOutputStream(new BufferedOutputStream(fileOut));
+			objOut.writeObject(setContact);
+			objOut.writeObject(setMeeting);
+			objOut.writeObject(setPastMeeting);
+			objOut.writeObject(setFutureMeeting);
+			
+			objOut.close();
+			fileOut.close();
+		} catch (FileNotFoundException e) {
+			System.out.println(fileOut + " was not found");
+			e.printStackTrace();
+		
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
