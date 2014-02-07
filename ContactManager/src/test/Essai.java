@@ -14,12 +14,23 @@ public class Essai {
 	}
 
 	private void launch() {
-		ContactManagerImpl cmi = new ContactManagerImpl();
-		cmi.readTextFile();
+		//ContactManagerImpl cmi = new ContactManagerImpl();
+		//cmi.readTextFile();
 		//Calendar cal = cmi.today();
 		//System.out.println(cal.getTime());
+
+		//System.out.println(cmi.findId("meeting"));
 		
-		System.out.println(cmi.findId("meeting"));
+		
+		String A = "Blablombadoum";
+		String template = "Blablo";
+		
+		if (A.matches("(?i).*"+ template +".*")){
+			System.out.println("OK");
+		}else{
+			System.out.println("Not ok");
+		}
+			
 	}
 
 }

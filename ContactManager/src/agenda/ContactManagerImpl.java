@@ -174,11 +174,14 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public List<Meeting> getFutureMeetingList(Contact contact) {
+	public List<Meeting> getFutureMeetingList(Contact contact) throws IllegalArgumentException {
 		List<Meeting> lm = new ArrayList<Meeting>();
+		if(!setContact.contains(contact)){
+			throw new IllegalArgumentException("the contact is not currently registered");
+		}
 		if (setMeeting.isEmpty()) {
 			System.out.println("there is currently no meeting recorded");
-			return null;
+			return lm;
 		}else{
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
@@ -194,7 +197,7 @@ public class ContactManagerImpl implements ContactManager {
 		List<Meeting> lm = new ArrayList<Meeting>();
 		if (setMeeting.isEmpty()) {
 			System.out.println("there is currently no meeting recorded");
-			return null;
+			return lm;
 		}else{
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
@@ -206,8 +209,11 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public List<PastMeeting> getPastMeetingList(Contact contact) {
+	public List<PastMeeting> getPastMeetingList(Contact contact) throws IllegalArgumentException{
 		List<PastMeeting> lm = new ArrayList<PastMeeting>();
+		if(!setContact.contains(contact)){
+			throw new IllegalArgumentException("the contact is not currently registered");
+		}
 		if (setMeeting.isEmpty()) {
 			System.out.println("there is currently no meeting recorded");
 			return null;
@@ -318,8 +324,19 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Set<Contact> getContacts(String name) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Contact> setCtcName = new HashSet<Contact>();
+		if (name == null){
+			throw new NullPointerException("The given String Name was NULL");
+		}else{
+			Iterator<Contact> it = setContact.iterator();
+			while (it.hasNext()){
+				Contact obj = it.next();
+				if (obj.getName().matches("(?i).*"+ name +".*")){  // match solution case insensitive partially by Coveros Gene at http://stackoverflow.com/questions/687577/how-do-i-see-if-a-substring-exists-inside-another-string-in-java-1-4
+					setCtcName.add(obj)	;
+				}
+			}
+		}	
+		return setCtcName;  // Warning the set can be empty !
 	}
 
 	@Override
