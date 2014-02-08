@@ -55,10 +55,6 @@ public class ContactManagerImpl implements ContactManager {
 
 // *********************** TOOLS needed for method in the interface implementation ***************	
 	
-	public void Import(String fileName){
-		// TODO generate method Import
-	}
-	
 	public int findId (String s){
 		int id = 0;
 		boolean check = true;
@@ -123,13 +119,13 @@ public class ContactManagerImpl implements ContactManager {
 		int id = findId("meeting");
 		//Calendar today =  Calendar.getInstance();
 		if (date.compareTo(today)<0){
-			throw new IllegalArgumentException("You can not set a futur meeting in the past");
+			throw new IllegalArgumentException("You can not set a future meeting in the past");
 		}
-		if ( (contacts==null) || (!this.setContact.containsAll(contacts)) ) {
-            throw new IllegalArgumentException("you did set none or unregistered contact(s) for this meeting");
+		if ( (contacts==null) || (!this.setContact.containsAll(contacts)) || (contacts.size()<1)) {
+            throw new IllegalArgumentException("None or unregistered contact(s) were set for this meeting");
 		}
 		
-		Meeting meeting = new MeetingImpl(id, date, contacts);
+		Meeting meeting = new FutureMeetingImpl(id, date, contacts);
 		this.setMeeting.add(meeting);
 		
 		return id;
@@ -138,21 +134,18 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {
 		PastMeeting pm = null;
-		Iterator<FutureMeeting> itf = setFutureMeeting.iterator();
-		while (itf.hasNext()){
-			FutureMeeting obj = itf.next();
-			if (obj.getId() ==id){
-				throw new IllegalArgumentException("this id is related to a future meeting");
-			}
-		}
-		if (setPastMeeting.isEmpty()) {
+		if (setMeeting.isEmpty()) {
 			return null;
 		}else{
-			Iterator<PastMeeting> it = setPastMeeting.iterator();
+			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
-				PastMeeting obj = it.next();
+				Meeting obj = it.next();
 				if (obj.getId() ==id){
-					pm = obj;
+					if(obj.getDate().after(today)){ // need to take today meeting as future meeting
+						throw new IllegalArgumentException("the id " + id + " is related to a future meeting");
+					}else{
+						pm = (PastMeeting) obj;
+					}
 				}
 			}	
 			return pm;
@@ -170,7 +163,7 @@ public class ContactManagerImpl implements ContactManager {
 				Meeting obj = it.next();
 				if (obj.getId() == id){
 					if(obj.getDate().before(today)){
-						throw new IllegalArgumentException("this id is related to a past meeting");
+						throw new IllegalArgumentException("the id " + id + " is related to a past meeting");
 					}else{
 						fm = (FutureMeeting) obj;
 					}
@@ -271,23 +264,22 @@ public class ContactManagerImpl implements ContactManager {
 				throw new IllegalArgumentException("not all contact linked to the meeting were register");
 			}
 		}
-		
-		PastMeetingImpl pmi = new PastMeetingImpl(id, date, contacts, text);
-		if (setPastMeeting.isEmpty()){
-			setMeeting.add(pmi);
-		}else{
-			Iterator<Meeting> itm = setMeeting.iterator();
-			while (itm.hasNext()){
-				Meeting obj = itm.next();
-				if (obj.getDate().equals(date)){
-					int objID = obj.getId();
-					this.addMeetingNotes(objID, text);
-					System.out.println("this meeting was already saved, notes has been updated ");
-					check = false;  
+		if (check){
+			Meeting pmi = new PastMeetingImpl(id, date, contacts, text);
+			if (!setMeeting.isEmpty()){
+				Iterator<Meeting> itm = setMeeting.iterator();
+				while (itm.hasNext()){
+					Meeting obj = itm.next();
+					if (obj.getDate().equals(date)){
+						int objID = obj.getId();
+						this.addMeetingNotes(objID, text);
+						System.out.println("this meeting was already saved, notes has been updated ");
+						check = false;  
+					}
 				}
 			}
+			if (check) setMeeting.add(pmi);
 		}
-		if (check) setMeeting.add(pmi);
 	}
 
 	@Override

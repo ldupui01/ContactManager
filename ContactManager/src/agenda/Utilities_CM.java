@@ -17,6 +17,16 @@ public class Utilities_CM {
 		return cal;
 	}
 	
+	public Calendar setDate(int D, int M, int Y){
+	    M = M -1; // -1 because the month start at 0 for January
+	  
+	    Calendar cal = Calendar.getInstance();
+	    cal.clear();
+	    cal.set(Y, M, D);
+		return cal;
+	}
+	
+	
 	public Calendar today(){
 		Calendar today =  Calendar.getInstance();
 		return today;
