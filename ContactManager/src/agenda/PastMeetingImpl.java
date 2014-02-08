@@ -1,9 +1,10 @@
 package agenda;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
-public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
+public class PastMeetingImpl extends MeetingImpl implements PastMeeting, Serializable {
 	
 	/**
 	* A meeting that was held in the past.

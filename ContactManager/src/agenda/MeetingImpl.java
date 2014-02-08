@@ -1,11 +1,12 @@
 package agenda;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MeetingImpl implements Meeting {
+public class MeetingImpl implements Meeting, Serializable {
 	
 	/**
 	 * The unique ID of the meeting

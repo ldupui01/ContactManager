@@ -338,4 +338,10 @@ public class ContactManagerImpl_v1 implements ContactManager {
 
 	}
 
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
