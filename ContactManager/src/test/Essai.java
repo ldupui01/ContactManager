@@ -65,6 +65,7 @@ public class Essai {
 			System.out.println("NULL");
 		}
 		
+		System.out.println(cm.getSize());
 		cm.flush();
 		
 		/*Meeting m1 = new FutureMeetingImpl (1, pastDay1, singleton);

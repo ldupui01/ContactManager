@@ -320,7 +320,7 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getDate().after(today)) {
 					throw new IllegalArgumentException("this meeting is set in the future. No notes allowed yet");
 				}else {
-					//obj.setNotes(text);  // *************** did modify the interface to be able to update the notes .... Need to find another solution *********************
+/*************/		//obj.setNotes(text);  // *************** did modify the interface to be able to update the notes .... Need to find another solution *********************
 					check = true;
 				}
 			}
@@ -406,8 +406,8 @@ public class ContactManagerImpl implements ContactManager {
 	/********************** TEST *************************/
 	
 	public int getSize(){
-		// int i = setContact.size(); 
-		int i = setMeeting.size();
+		 int i = setContact.size(); 
+		//int i = setMeeting.size();
 		 return i;
 	}
 
