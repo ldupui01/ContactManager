@@ -18,8 +18,8 @@ import java.util.Set;
 public class ContactManagerImpl implements ContactManager {
 	private Set<Contact> setContact;
 	private Set<Meeting> setMeeting;
-	private Set<PastMeeting> setPastMeeting;
-	private Set<FutureMeeting> setFutureMeeting;
+	//private Set<PastMeeting> setPastMeeting;
+	//private Set<FutureMeeting> setFutureMeeting;
 	private static final String EXPORTFILE = "contacts.txt";
 	private Calendar today = null;
 	
@@ -32,8 +32,8 @@ public class ContactManagerImpl implements ContactManager {
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
 		         setContact = (Set<Contact>) in.readObject();
 		         setMeeting = (Set<Meeting>) in.readObject();
-		         setPastMeeting = (Set<PastMeeting>) in.readObject();
-		         setFutureMeeting = (Set<FutureMeeting>) in.readObject();
+		         //setPastMeeting = (Set<PastMeeting>) in.readObject();
+		         //setFutureMeeting = (Set<FutureMeeting>) in.readObject();
 		         in.close();
 		         fileIn.close();
 		      }catch(IOException i)
@@ -48,8 +48,8 @@ public class ContactManagerImpl implements ContactManager {
 		}else{
 			this.setMeeting = new HashSet<Meeting>();
 			this.setContact = new HashSet<Contact>();
-			this.setPastMeeting  = new HashSet<PastMeeting>();
-			this.setFutureMeeting  = new HashSet<FutureMeeting>();
+			//this.setPastMeeting  = new HashSet<PastMeeting>();
+			//this.setFutureMeeting  = new HashSet<FutureMeeting>();
 		}
 	}
 
@@ -70,6 +70,7 @@ public class ContactManagerImpl implements ContactManager {
 					}
 				}	
 			}while(!check);
+			
 		}else if(s == "meeting"){
 			do{
 				check = true;
@@ -117,16 +118,14 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException{
 		int id = findId("meeting");
-		//Calendar today =  Calendar.getInstance();
 		if (date.compareTo(today)<0){
 			throw new IllegalArgumentException("You can not set a future meeting in the past");
 		}
 		if ( (contacts==null) || (!this.setContact.containsAll(contacts)) || (contacts.size()<1)) {
             throw new IllegalArgumentException("None or unregistered contact(s) were set for this meeting");
 		}
-		
-		Meeting meeting = new FutureMeetingImpl(id, date, contacts);
-		this.setMeeting.add(meeting);
+		Meeting newMeeting = new FutureMeetingImpl(id, date, contacts);
+		setMeeting.add(newMeeting);
 		
 		return id;
 	}
@@ -140,7 +139,7 @@ public class ContactManagerImpl implements ContactManager {
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				if (obj.getId() ==id){
+				if (id == obj.getId() ){
 					if(obj.getDate().after(today)){ // need to take today meeting as future meeting
 						throw new IllegalArgumentException("the id " + id + " is related to a future meeting");
 					}else{
@@ -155,12 +154,15 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public FutureMeeting getFutureMeeting(int id) throws IllegalArgumentException {
 		FutureMeeting fm = null;
+		
 		if (setMeeting.isEmpty()) {
 			return null;
 		}else{
 			Iterator<Meeting> it = setMeeting.iterator();
+			
 			while (it.hasNext()){
 				Meeting obj = it.next();
+				
 				if (obj.getId() == id){
 					if(obj.getDate().before(today)){
 						throw new IllegalArgumentException("the id " + id + " is related to a past meeting");
@@ -183,7 +185,7 @@ public class ContactManagerImpl implements ContactManager {
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				if (obj.getId() ==id){
+				if (id == obj.getId()){
 					m = obj;
 				}
 			}	
@@ -236,10 +238,10 @@ public class ContactManagerImpl implements ContactManager {
 			System.out.println("there is currently no meeting recorded");
 			return null;
 		}else{
-			Iterator<PastMeeting> it = setPastMeeting.iterator();
+			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
-				PastMeeting obj = it.next();
-				if (obj.getContacts().contains(contact)) lm.add(obj);
+				Meeting obj = it.next();
+				if (obj.getContacts().contains(contact)) lm.add((PastMeeting) obj);
 			}
 		}
 		return lm;
@@ -290,9 +292,9 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		Calendar today =  Calendar.getInstance();
 		
-		Iterator<PastMeeting> itp = setPastMeeting.iterator();
+		Iterator<Meeting> itp = setMeeting.iterator();
 		while (itp.hasNext()){
-			PastMeeting obj = itp.next();
+			Meeting obj = itp.next();
 			if (obj.getId() == id){
 				if (obj.getDate().after(today)) {
 					throw new IllegalArgumentException("this meeting is set in the future. No notes allowed yet");
@@ -365,8 +367,8 @@ public class ContactManagerImpl implements ContactManager {
 			objOut = new ObjectOutputStream(new BufferedOutputStream(fileOut));
 			objOut.writeObject(setContact);
 			objOut.writeObject(setMeeting);
-			objOut.writeObject(setPastMeeting);
-			objOut.writeObject(setFutureMeeting);
+			//objOut.writeObject(setPastMeeting);
+			//objOut.writeObject(setFutureMeeting);
 			
 			objOut.close();
 			fileOut.close();
@@ -383,7 +385,7 @@ public class ContactManagerImpl implements ContactManager {
 	/********************** TEST *************************/
 	
 	public int getSize(){
-		 int i = setContact.size();
+		 int i = setMeeting.size();
 		 return i;
 	}
 

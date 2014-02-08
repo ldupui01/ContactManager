@@ -23,7 +23,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting, Seriali
 		this.index = getSetIndex();
 	}
 
-	@Override
+	/*@Override
 	public int getId() {
 		int id = super.getId();
 		return id;
@@ -39,7 +39,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting, Seriali
 	public Set<Contact> getContacts() {
 		Set<Contact> setContacts = super.getContacts();
 		return setContacts;
-	}
+	}*/
 
 	@Override
 	public String getNotes() {

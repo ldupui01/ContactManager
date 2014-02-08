@@ -11,7 +11,7 @@ public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting, Ser
 		super(mUID, mDate, mContacts);
 	}
 	
-	@Override
+	/*@Override
 	public int getId() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -27,6 +27,6 @@ public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting, Ser
 	public Set<Contact> getContacts() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }
