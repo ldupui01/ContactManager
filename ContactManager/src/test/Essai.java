@@ -65,7 +65,9 @@ public class Essai {
 			System.out.println("NULL");
 		}
 		
-		Meeting m1 = new FutureMeetingImpl (1, pastDay1, singleton);
+		cm.flush();
+		
+		/*Meeting m1 = new FutureMeetingImpl (1, pastDay1, singleton);
 		Meeting m2 = new FutureMeetingImpl (2, futureDay1, singleton);
 		Meeting m3 =  new MeetingImpl(3, futureDay2, setActual);
 		
@@ -86,7 +88,7 @@ public class Essai {
 		//System.out.println(mClass.getId());
 		//if(cm.getMeeting(j).getClass().equals(FutureMeetingImpl.class)){
 		//	System.out.println("future meeting");
-		//}
+		//}*/
 		
 	}
 

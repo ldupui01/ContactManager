@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -112,6 +114,21 @@ public class ContactManagerImpl implements ContactManager {
 			}
 		}
 	}
+	
+	class Chronology implements Comparator<Meeting> {
+		@Override
+		public int compare(Meeting a, Meeting b) {
+			if(a.getDate().compareTo(b.getDate())>0){
+				return 1;
+			}
+			else if(a.getDate().compareTo(b.getDate())<0) {
+				return -1;
+			}
+			else {
+				return 0;
+			}
+		}
+	}
 
 //************** THe interface implementation start from here ******************
 	
@@ -209,6 +226,7 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getContacts().contains(contact)) lm.add(obj);
 			}
 		}
+		Collections.sort(lm, new Chronology());
 		return lm;
 	}
 
@@ -225,6 +243,8 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getDate().equals(date)) lm.add(obj);
 			}
 		}
+		
+		Collections.sort(lm, new Chronology());
 		return lm;
 	}
 
@@ -244,6 +264,7 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getContacts().contains(contact)) lm.add((PastMeeting) obj);
 			}
 		}
+		Collections.sort(lm, new Chronology());
 		return lm;
 	}
 
@@ -299,7 +320,7 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getDate().after(today)) {
 					throw new IllegalArgumentException("this meeting is set in the future. No notes allowed yet");
 				}else {
-					obj.setNotes(text);  // *************** did modify the interface to be able to update the notes .... Need to find another solution *********************
+					//obj.setNotes(text);  // *************** did modify the interface to be able to update the notes .... Need to find another solution *********************
 					check = true;
 				}
 			}
@@ -385,7 +406,8 @@ public class ContactManagerImpl implements ContactManager {
 	/********************** TEST *************************/
 	
 	public int getSize(){
-		 int i = setMeeting.size();
+		// int i = setContact.size(); 
+		int i = setMeeting.size();
 		 return i;
 	}
 
