@@ -16,10 +16,4 @@ public interface PastMeeting extends Meeting {
 	*/
 	String getNotes();
 	
-	
-	
-	/**void setNotes(String note);
-	 * Temporary solution !!!
-	 */
-
 }

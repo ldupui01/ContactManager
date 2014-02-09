@@ -7,65 +7,35 @@ import java.util.Set;
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting, Serializable {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1933217545452892279L;
+	/**
 	* A meeting that was held in the past.
 	*
 	* It includes your notes about what happened and what was agreed.
 	*/
 	
 	private String mNote;
-	
-	//private int index;
 
 	
 	public PastMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
 		super(mUID, mDate, mContacts);
 		this.mNote = "";
-		//this.index = getSetIndex();
 	}
 	
 	public PastMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts, String mNote){
 		super(mUID, mDate, mContacts);
 		this.mNote = mNote;
-		//this.index = getSetIndex();
 	}
 	
 	public PastMeetingImpl(Meeting m, String mNote){
 		super(m.getId(), m.getDate(), m.getContacts());
 		this.mNote = mNote;
-		//this.index = getSetIndex();
 	}
 	
 	@Override
 	public String getNotes() {
 		return mNote;
 	}
-
-	/*@Override
-	public int getId() {
-		int id = super.getId();
-		return id;
-	}
-
-	@Override
-	public Calendar getDate() {
-		Calendar date = super.getDate();
-		return date;
-	}
-
-	@Override
-	public Set<Contact> getContacts() {
-		Set<Contact> setContacts = super.getContacts();
-		return setContacts;
-	}*/
-
-	
-	/*public void setNotes(String note){
-		this.mNote = note;
-	}*/
-	
-	/*public int setgetIndex(){
-		int index = super.getSetIndex();
-		return index; 
-	}*/
-
 }

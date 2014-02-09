@@ -267,7 +267,6 @@ public class ContactManagerImpl implements ContactManager {
 				}
 			}
 		}
-		
 		Collections.sort(lm, new Chronology());
 		return lm;
 	}
@@ -302,9 +301,7 @@ public class ContactManagerImpl implements ContactManager {
 			check = false;
 			throw new NullPointerException(" One of the argument Contact, Date or Notes was NULL");
 		}
-		
-		// Checking validity of contact
-		
+// Checking validity of contact
 		if (contacts.isEmpty()) {
 			check = false;
 			throw new IllegalArgumentException("no contact was linked to the meeting");
@@ -434,7 +431,5 @@ public class ContactManagerImpl implements ContactManager {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

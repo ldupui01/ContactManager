@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ContactImpl implements Contact, Serializable {
 	
+	private static final long serialVersionUID = 1945670924947820279L;
 	/**
 	* Contact's ID (unique)
 	*/
@@ -34,7 +35,6 @@ public class ContactImpl implements Contact, Serializable {
 		int result = 1;
 		result = prime * result + cUID;
 		return result;
-		
 	}
 
 	@Override
@@ -56,7 +56,6 @@ public class ContactImpl implements Contact, Serializable {
 			return true;
 		return false;
 	}
-
 
 	@Override
 	public int getId() {

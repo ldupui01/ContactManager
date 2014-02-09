@@ -28,13 +28,14 @@ public class TestRunComplete {
 		Utilities_CM util = new Utilities_CM();
 		Calendar today = util.setDate(1, 3, 2014);
 		
-		ContactManager cm = new ContactManagerImpl(today);
+		ContactManager cm = new ContactManagerImpl();
 		/******** Setting TEST_1 *****/
-		/*Create contact *
+		/*Create contact*
+		
 		cm.addNewContact("JEAN", "bleu");
 		cm.addNewContact("Michel", "rouge");
 		cm.addNewContact("Henry", "Jaune"); 
-		/**/
+		/***/
 		
 		Set<Contact> setCM1 = new HashSet<Contact>();
 		setCM1= cm.getContacts("Jean");

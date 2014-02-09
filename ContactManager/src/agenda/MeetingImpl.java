@@ -2,12 +2,15 @@ package agenda;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 public class MeetingImpl implements Meeting, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1944747545461982279L;
+
 	/**
 	 * The unique ID of the meeting
 	 */
@@ -22,15 +25,11 @@ public class MeetingImpl implements Meeting, Serializable {
 	 * The list of contact present to the meeting
 	 */
 	private Set<Contact> mContacts;
-	
-	private int index;
-
 
 	public MeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
 		this.mUID = mUID;
 		this.mDate = mDate;
 		this.mContacts = mContacts;
-		//this.index = this.getSetIndex();
 	}
 	
 	@Override
@@ -67,14 +66,6 @@ public class MeetingImpl implements Meeting, Serializable {
 
 	@Override
 	public Set<Contact> getContacts() {
-		//Set<Contact> set = new HashSet<Contact>();
-		//return set;
 		return this.mContacts;
 	}
-	
-	/*public int getSetIndex(){
-		this.index = this.mDate.get(Calendar.YEAR)*1000 + (mDate.get(Calendar.MONTH)+1)*100 + mDate.get(Calendar.DAY_OF_MONTH);
-		return this.index; 
-	}*/
-
 }
