@@ -23,16 +23,14 @@ public class ContactManagerImpl implements ContactManager {
 	private static final String EXPORTFILE = "contacts.txt";
 	private Calendar today = null;
 	
-/**************  Will be reinstall after TEST  *****************
+/**
+ * the constructor set the date to the current date for comparing later, past and future meeting.
+ * Then it try to load and deserialize the file named "contacts.text" if it exist. If the file does not exist,
+ *  it creates 2 variable as sets, to hold the contacts and meetings objects. 
+ */
+	
 	public ContactManagerImpl(){   
 	 	today = Calendar.getInstance(); 
-**********************************************************************/	 	
-
-/********************** Will be delete after Test***********************/	
-	public ContactManagerImpl(Calendar today){ 	
-		this.today = today;
-/***********************UNTIL HERE**********************************/
-		
 		if(new File(EXPORTFILE).exists()){
 			try
 		      {
@@ -62,7 +60,7 @@ public class ContactManagerImpl implements ContactManager {
 // *********************** TOOLS used in some methods in the interface implementation ***************	
 	
 	/** 
-	 * This method find the next available id starting from 1 and increment by 1 
+	 * This findId method find the next available id starting from 1 and increment by 1 
 	 * for every contact or meeting present in the given Contact and Meeting sets
 	 */
 	
@@ -99,8 +97,9 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	/**
-	 * This method select every futureMeeting Object, listed in the Meeting set, 
-	 * and Transform those with a Meeting date older than the current date into a PastMeeting implementation
+	 * This transFuture2PastMeeting method select every futureMeeting Object, listed in the Meeting set, 
+	 * and transform, those with a Meeting date older than the current date, into PastMeeting implementation object.
+	 * this new object replace the previous one it the Meeting set. However the ID of the object remains unchanged!
 	 */
 	
 	public void transFuture2PastMeeting (){
@@ -131,8 +130,8 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	/**
-	 * this Chronology method allows set List (collection) to be sorted by date. 
-	 *The older before the younger
+	 * This Chronology inner class is sorting by date the set list (collection) to be sorted by date. 
+	 * The older before the younger
 	 *
 	 */
 	
