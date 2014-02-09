@@ -30,7 +30,7 @@ public class TestRunComplete {
 		
 		ContactManager cm = new ContactManagerImpl();
 		/******** Setting TEST_1 *****/
-		/*Create contact*
+		/*Create contact*/
 		
 		cm.addNewContact("JEAN", "bleu");
 		cm.addNewContact("Michel", "rouge");
@@ -72,7 +72,7 @@ public class TestRunComplete {
 		//System.out.println(": " + dateM2.DAY_OF_MONTH + "/" + dateM2.MONTH + "/" + dateM2.YEAR);
 		
 		
-		/***
+		/***/
 		cm.addNewPastMeeting(setCM1, dateM1, "OK");  					//M1
 		cm.addNewPastMeeting(setCM2, dateM2, "Chaud"); 					//M2
 		cm.addNewPastMeeting(setCM3, dateM3, "Difficile");				//M3
@@ -115,7 +115,7 @@ public class TestRunComplete {
 		//cm.addFutureMeeting(setCM6, dateM4);
 		
 		List<Meeting> ldm = cm.getFutureMeetingList(dateM4);
-		System.out.println("FutureMeeting on the " + dateM4.DAY_OF_MONTH + "/" + dateM4.MONTH + "/" + dateM4.YEAR + ": "+ ldm.size());
+		//System.out.println("FutureMeeting on the " + dateM4.DAY_OF_MONTH + "/" + dateM4.MONTH + "/" + dateM4.YEAR + ": "+ ldm.size());
 		
 
 		for (int i=0;i<13;i++){ //replace 13 with cm.getSizeMeeting()
