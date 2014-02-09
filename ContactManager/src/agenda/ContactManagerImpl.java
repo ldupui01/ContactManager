@@ -50,6 +50,8 @@ public class ContactManagerImpl implements ContactManager {
 		      {
 		         System.out.println("Contact or Meeting class not found");
 		         e.printStackTrace();
+		      }finally{
+		    	  this.transFuture2PastMeeting();
 		      }
 		}else{
 			this.setMeeting = new HashSet<Meeting>();
@@ -94,6 +96,7 @@ public class ContactManagerImpl implements ContactManager {
 	public void transFuture2PastMeeting (){
 		Meeting pm = null;
 		String text = null;
+		Set<Meeting> tempSetM = new HashSet<Meeting>();
 		if (!setMeeting.isEmpty()){
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
@@ -101,9 +104,17 @@ public class ContactManagerImpl implements ContactManager {
 				if(obj.getDate().before(today)){
 					if(obj.getClass() == FutureMeetingImpl.class){
 						pm = new PastMeetingImpl(obj.getId(), obj.getDate(), obj.getContacts(), text);
-						setMeeting.remove(obj);
-						setMeeting.add(pm);
+						tempSetM.add(pm);
+						it.remove();
 					}
+				}
+			}
+			if(!tempSetM.isEmpty()){
+				Iterator<Meeting> itemp = tempSetM.iterator();
+				while (itemp.hasNext()){
+					Meeting objTemp = itemp.next();
+					setMeeting.add(objTemp);
+					itemp.remove();
 				}
 			}
 		}
@@ -309,6 +320,7 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public void addMeetingNotes(int id, String text) throws NullPointerException, IllegalStateException, IllegalArgumentException{
 		this.transFuture2PastMeeting();
+		Meeting mUpdate = null;
 		boolean check = false;
 		if (text == null){
 			throw new NullPointerException("No notes were given");
@@ -323,12 +335,14 @@ public class ContactManagerImpl implements ContactManager {
 					PastMeeting pm1 = (PastMeeting) obj;
 					String note = pm1.getNotes();
 					note = note + " Add note on " + today.toString() + ": " + text;
-					Meeting pm = new PastMeetingImpl(obj, note);
-					setMeeting.remove(obj);
-					setMeeting.add(pm);
+					mUpdate = new PastMeetingImpl(obj, note);
+					itp.remove();
 					check = true;
 				}
 			}
+		}
+		if(mUpdate != null){
+			setMeeting.add(mUpdate);
 		}
 		if (!check) throw new IllegalArgumentException("No meeting is matching this ID");
 	}
@@ -408,7 +422,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 	
-	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************
+	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
 	
 	public int getSizeContact(){
 		 int i = setContact.size(); 
@@ -420,6 +434,6 @@ public class ContactManagerImpl implements ContactManager {
 		return i;
 	}
 	
-	********************** TEST END *********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
+	/********************** TEST END *********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
 
 }
