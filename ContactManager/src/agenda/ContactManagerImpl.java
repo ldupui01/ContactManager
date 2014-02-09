@@ -422,7 +422,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 	
-	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
+	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************
 	
 	public int getSizeContact(){
 		 int i = setContact.size(); 
