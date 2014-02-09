@@ -14,13 +14,30 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting, Seriali
 	
 	private String mNote;
 	
-	private int index;
+	//private int index;
 
+	
+	public PastMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts){
+		super(mUID, mDate, mContacts);
+		this.mNote = "";
+		//this.index = getSetIndex();
+	}
 	
 	public PastMeetingImpl(int mUID, Calendar mDate, Set<Contact> mContacts, String mNote){
 		super(mUID, mDate, mContacts);
 		this.mNote = mNote;
-		this.index = getSetIndex();
+		//this.index = getSetIndex();
+	}
+	
+	public PastMeetingImpl(Meeting m, String mNote){
+		super(m.getId(), m.getDate(), m.getContacts());
+		this.mNote = mNote;
+		//this.index = getSetIndex();
+	}
+	
+	@Override
+	public String getNotes() {
+		return mNote;
 	}
 
 	/*@Override
@@ -41,18 +58,14 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting, Seriali
 		return setContacts;
 	}*/
 
-	@Override
-	public String getNotes() {
-		return mNote;
-	}
 	
-	public void setNotes(String note){
+	/*public void setNotes(String note){
 		this.mNote = note;
-	}
+	}*/
 	
-	public int setgetIndex(){
+	/*public int setgetIndex(){
 		int index = super.getSetIndex();
 		return index; 
-	}
+	}*/
 
 }

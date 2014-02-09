@@ -30,7 +30,7 @@ public class MeetingImpl implements Meeting, Serializable {
 		this.mUID = mUID;
 		this.mDate = mDate;
 		this.mContacts = mContacts;
-		this.index = this.getSetIndex();
+		//this.index = this.getSetIndex();
 	}
 	
 	@Override
@@ -72,9 +72,9 @@ public class MeetingImpl implements Meeting, Serializable {
 		return this.mContacts;
 	}
 	
-	public int getSetIndex(){
+	/*public int getSetIndex(){
 		this.index = this.mDate.get(Calendar.YEAR)*1000 + (mDate.get(Calendar.MONTH)+1)*100 + mDate.get(Calendar.DAY_OF_MONTH);
 		return this.index; 
-	}
+	}*/
 
 }

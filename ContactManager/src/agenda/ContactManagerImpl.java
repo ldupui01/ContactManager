@@ -89,26 +89,18 @@ public class ContactManagerImpl implements ContactManager {
 		return id;
 	}
 	
-	public void setPastFutureMeeting (){
-		PastMeeting pm = null;
-		FutureMeeting fm = null;
-		int id = 0;
-		if (setMeeting.isEmpty()){
-			System.out.println("No meeting has been recorded yet");
-		}else{
+	public void transFuture2PastMeeting (){
+		Meeting pm = null;
+		String text = null;
+		if (!setMeeting.isEmpty()){
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				id = obj.getId();
-				if(obj.getDate().compareTo(today)<=0){
-					pm = this.getPastMeeting(id);
-					if (pm == null){
-						pm = (PastMeeting)obj;
-					}
-				}else{
-					fm = this.getFutureMeeting(id);
-					if (fm == null){
-						fm = (FutureMeeting)obj;
+				if(obj.getDate().before(today)){
+					if(obj.getClass() == FutureMeetingImpl.class){
+						pm = new PastMeetingImpl(obj.getId(), obj.getDate(), obj.getContacts(), text);
+						setMeeting.remove(obj);
+						setMeeting.add(pm);
 					}
 				}
 			}
@@ -307,6 +299,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void addMeetingNotes(int id, String text) throws NullPointerException, IllegalStateException, IllegalArgumentException{
+		this.transFuture2PastMeeting();
 		boolean check = false;
 		if (text == null){
 			throw new NullPointerException("No notes were given");
@@ -320,7 +313,9 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getDate().after(today)) {
 					throw new IllegalArgumentException("this meeting is set in the future. No notes allowed yet");
 				}else {
-/*************/		//obj.setNotes(text);  // *************** did modify the interface to be able to update the notes .... Need to find another solution *********************
+					Meeting pm = new PastMeetingImpl(obj, text);
+					setMeeting.remove(obj);
+					setMeeting.add(pm);
 					check = true;
 				}
 			}
