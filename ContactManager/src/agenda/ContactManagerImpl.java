@@ -151,7 +151,7 @@ public class ContactManagerImpl implements ContactManager {
 			while (it.hasNext()){
 				Meeting obj = it.next();
 				if (id == obj.getId() ){
-					if(obj.getDate().after(today)){ // need to take today meeting as future meeting
+					if(obj.getDate().after(today)){ // ****************************need to take today meeting as future meeting
 						throw new IllegalArgumentException("the id " + id + " is related to a future meeting");
 					}else{
 						pm = (PastMeeting) obj;
@@ -277,7 +277,8 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException(" One of the argument Contact, Date or Notes was NULL");
 		}
 		
-		//  								Checking validity of contact
+		// Checking validity of contact
+		
 		if (contacts.isEmpty()) {
 			check = false;
 			throw new IllegalArgumentException("no contact was linked to the meeting");
@@ -336,7 +337,7 @@ public class ContactManagerImpl implements ContactManager {
 	public void addNewContact(String name, String notes) throws NullPointerException{
 		boolean check = true;
 		if(name == null || notes == null){
-			check = false; // ****************************** CHECK IF WE NEED THIS STEP TO PREVENT METHOD CONTINUE IF THROW EXCEPTION HAPPENS ??????
+			check = false;
 			throw new NullPointerException("One of the argument Name or Notes was NULL");
 		}
 		if(check){
@@ -407,7 +408,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 	
-	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
+	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************
 	
 	public int getSizeContact(){
 		 int i = setContact.size(); 
@@ -419,6 +420,6 @@ public class ContactManagerImpl implements ContactManager {
 		return i;
 	}
 	
-	/********************** TEST END *********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
+	********************** TEST END *********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
 
 }

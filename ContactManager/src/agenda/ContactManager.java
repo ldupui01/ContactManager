@@ -162,7 +162,7 @@ public interface ContactManager {
 	
 	/** FOR TEST ONLY // Following method has to be deleted !!!! **********
 	 * 
-	 */
-	int getSizeContact();
-	int getSizeMeeting();
+	* int getSizeContact();
+	* int getSizeMeeting();
+	*/
 }
