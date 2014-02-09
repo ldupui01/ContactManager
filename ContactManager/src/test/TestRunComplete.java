@@ -30,7 +30,7 @@ public class TestRunComplete {
 		
 		ContactManager cm = new ContactManagerImpl(today);
 		/******** Setting TEST_1 *****/
-		/*Create contact */
+		/*Create contact *
 		cm.addNewContact("JEAN", "bleu");
 		cm.addNewContact("Michel", "rouge");
 		cm.addNewContact("Henry", "Jaune"); 
@@ -132,8 +132,14 @@ public class TestRunComplete {
 		PastMeeting mNote = (PastMeeting)cm.getMeeting(1);
 		System.out.println(mNote.getNotes());
 		
-		PastMeeting mNote2 = (PastMeeting)cm.getMeeting(6);
-		System.out.println(mNote2.getNotes());
+		//PastMeeting mNote2 = (PastMeeting)cm.getMeeting(6);
+		//System.out.println(mNote2.getNotes());
+		
+		Set<Contact> setCbyName = cm.getContacts("J");
+		System.out.println("Nb of J: " + setCbyName.size());
+		
+		System.out.println("Nb of Jean: " + setCM1.size());
+		System.out.println("id6: " + setCbyName.size());
 		
 		/* flush */
 		cm.flush();

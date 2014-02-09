@@ -59,7 +59,12 @@ public class ContactManagerImpl implements ContactManager {
 		}
 	}
 
-// *********************** TOOLS needed for some methods in the interface implementation ***************	
+// *********************** TOOLS used in some methods in the interface implementation ***************	
+	
+	/** 
+	 * This method find the next available id starting from 1 and increment by 1 
+	 * for every contact or meeting present in the given Contact and Meeting sets
+	 */
 	
 	public int findId (String s){
 		int id = 0;
@@ -93,6 +98,11 @@ public class ContactManagerImpl implements ContactManager {
 		return id;
 	}
 	
+	/**
+	 * This method select every futureMeeting Object, listed in the Meeting set, 
+	 * and Transform those with a Meeting date older than the current date into a PastMeeting implementation
+	 */
+	
 	public void transFuture2PastMeeting (){
 		Meeting pm = null;
 		String text = null;
@@ -119,6 +129,12 @@ public class ContactManagerImpl implements ContactManager {
 			}
 		}
 	}
+	
+	/**
+	 * this Chronology method allows set List (collection) to be sorted by date. 
+	 *The older before the younger
+	 *
+	 */
 	
 	class Chronology implements Comparator<Meeting> {
 		@Override
@@ -162,7 +178,7 @@ public class ContactManagerImpl implements ContactManager {
 			while (it.hasNext()){
 				Meeting obj = it.next();
 				if (id == obj.getId() ){
-					if(obj.getDate().after(today)){ // ****************************need to take today meeting as future meeting
+					if(obj.getDate().after(today)){ 
 						throw new IllegalArgumentException("the id " + id + " is related to a future meeting");
 					}else{
 						pm = (PastMeeting) obj;
@@ -397,7 +413,7 @@ public class ContactManagerImpl implements ContactManager {
 				}
 			}
 		}	
-		return setCtcName;  // ************************ Warning the set can be empty ****************************** 
+		return setCtcName; 
 	}
 
 	@Override
@@ -421,19 +437,5 @@ public class ContactManagerImpl implements ContactManager {
 		}
 
 	}
-	
-	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************
-	
-	public int getSizeContact(){
-		 int i = setContact.size(); 
-		 return i;
-	}
-	
-	public int getSizeMeeting(){ 
-		int i = setMeeting.size();
-		return i;
-	}
-	
-	/********************** TEST END *********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
 
 }
