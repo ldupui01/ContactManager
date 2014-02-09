@@ -160,8 +160,9 @@ public interface ContactManager {
 	*/
 	void flush();
 	
-	/** FOR TEST ONLY // To be deleted !!!! **********
+	/** FOR TEST ONLY // Following method has to be deleted !!!! **********
 	 * 
 	 */
-	int getSize();
+	int getSizeContact();
+	int getSizeMeeting();
 }

@@ -1,4 +1,4 @@
-package agenda;
+package test;
 
 import java.util.Calendar;
 import java.util.HashSet;

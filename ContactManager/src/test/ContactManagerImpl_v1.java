@@ -1,4 +1,4 @@
-package agenda;
+package test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
+
+import agenda.ContactManager;
 
 public class ContactManagerImpl_v1 implements ContactManager {
 	private ArrayList<String[]> stringImport;

@@ -15,7 +15,7 @@ import agenda.FutureMeeting;
 import agenda.FutureMeetingImpl;
 import agenda.Meeting;
 import agenda.MeetingImpl;
-import agenda.Utilities_CM;
+
 
 public class Essai {
 	
@@ -65,7 +65,7 @@ public class Essai {
 			System.out.println("NULL");
 		}
 		
-		System.out.println(cm.getSize());
+		System.out.println(cm.getSizeMeeting());
 		cm.flush();
 		
 		/*Meeting m1 = new FutureMeetingImpl (1, pastDay1, singleton);

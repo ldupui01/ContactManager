@@ -20,13 +20,19 @@ import java.util.Set;
 public class ContactManagerImpl implements ContactManager {
 	private Set<Contact> setContact;
 	private Set<Meeting> setMeeting;
-	//private Set<PastMeeting> setPastMeeting;
-	//private Set<FutureMeeting> setFutureMeeting;
 	private static final String EXPORTFILE = "contacts.txt";
 	private Calendar today = null;
 	
-	public ContactManagerImpl(){
-		today = Calendar.getInstance(); // to move to its own method to allow refresh
+/**************  Will be reinstall after TEST  *****************
+	public ContactManagerImpl(){   
+	 	today = Calendar.getInstance(); 
+**********************************************************************/	 	
+
+/********************** Will be delete after Test***********************/	
+	public ContactManagerImpl(Calendar today){ 	
+		this.today = today;
+/***********************UNTIL HERE**********************************/
+		
 		if(new File(EXPORTFILE).exists()){
 			try
 		      {
@@ -34,8 +40,6 @@ public class ContactManagerImpl implements ContactManager {
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
 		         setContact = (Set<Contact>) in.readObject();
 		         setMeeting = (Set<Meeting>) in.readObject();
-		         //setPastMeeting = (Set<PastMeeting>) in.readObject();
-		         //setFutureMeeting = (Set<FutureMeeting>) in.readObject();
 		         in.close();
 		         fileIn.close();
 		      }catch(IOException i)
@@ -50,12 +54,10 @@ public class ContactManagerImpl implements ContactManager {
 		}else{
 			this.setMeeting = new HashSet<Meeting>();
 			this.setContact = new HashSet<Contact>();
-			//this.setPastMeeting  = new HashSet<PastMeeting>();
-			//this.setFutureMeeting  = new HashSet<FutureMeeting>();
 		}
 	}
 
-// *********************** TOOLS needed for method in the interface implementation ***************	
+// *********************** TOOLS needed for some methods in the interface implementation ***************	
 	
 	public int findId (String s){
 		int id = 0;
@@ -122,7 +124,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 	}
 
-//************** THe interface implementation start from here ******************
+//************** Interface implementation start from here ******************
 	
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException{
@@ -269,7 +271,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException(" One of the argument Contact, Date or Notes was NULL");
 		}
 		
-		// ************ Checking validity of contact ************
+		//  								Checking validity of contact
 		if (contacts.isEmpty()) {
 			check = false;
 			throw new IllegalArgumentException("no contact was linked to the meeting");
@@ -304,8 +306,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (text == null){
 			throw new NullPointerException("No notes were given");
 		}
-		Calendar today =  Calendar.getInstance();
-		
 		Iterator<Meeting> itp = setMeeting.iterator();
 		while (itp.hasNext()){
 			Meeting obj = itp.next();
@@ -313,7 +313,10 @@ public class ContactManagerImpl implements ContactManager {
 				if (obj.getDate().after(today)) {
 					throw new IllegalArgumentException("this meeting is set in the future. No notes allowed yet");
 				}else {
-					Meeting pm = new PastMeetingImpl(obj, text);
+					PastMeeting pm1 = (PastMeeting) obj;
+					String note = pm1.getNotes();
+					note = note + " Add note on " + today.toString() + ": " + text;
+					Meeting pm = new PastMeetingImpl(obj, note);
 					setMeeting.remove(obj);
 					setMeeting.add(pm);
 					check = true;
@@ -325,14 +328,16 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void addNewContact(String name, String notes) throws NullPointerException{
-		boolean check = false;
+		boolean check = true;
 		if(name == null || notes == null){
-			check = false;
+			check = false; // ****************************** CHECK IF WE NEED THIS STEP TO PREVENT METHOD CONTINUE IF THROW EXCEPTION HAPPENS ??????
 			throw new NullPointerException("One of the argument Name or Notes was NULL");
 		}
-		int cid = this.findId("contact");
-		Contact c = new ContactImpl(cid, name, notes);
-		setContact.add(c);
+		if(check){
+			int cid = this.findId("contact");
+			Contact c = new ContactImpl(cid, name, notes);
+			setContact.add(c);
+		}
 	}
 
 	@Override
@@ -366,12 +371,12 @@ public class ContactManagerImpl implements ContactManager {
 			Iterator<Contact> it = setContact.iterator();
 			while (it.hasNext()){
 				Contact obj = it.next();
-				if (obj.getName().matches("(?i).*"+ name +".*")){  // match solution case insensitive partially by Coveros Gene at http://stackoverflow.com/questions/687577/how-do-i-see-if-a-substring-exists-inside-another-string-in-java-1-4
+				if (obj.getName().matches("(?i).*"+ name +".*")){  // "match case insensitive" solution partially from Coveros Gene at http://stackoverflow.com/questions/687577/how-do-i-see-if-a-substring-exists-inside-another-string-in-java-1-4
 					setCtcName.add(obj);
 				}
 			}
 		}	
-		return setCtcName;  // Warning the set can be empty !
+		return setCtcName;  // ************************ Warning the set can be empty ****************************** 
 	}
 
 	@Override
@@ -383,8 +388,6 @@ public class ContactManagerImpl implements ContactManager {
 			objOut = new ObjectOutputStream(new BufferedOutputStream(fileOut));
 			objOut.writeObject(setContact);
 			objOut.writeObject(setMeeting);
-			//objOut.writeObject(setPastMeeting);
-			//objOut.writeObject(setFutureMeeting);
 			
 			objOut.close();
 			fileOut.close();
@@ -398,12 +401,18 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 	
-	/********************** TEST *************************/
+	/********************** TEST START*********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
 	
-	public int getSize(){
+	public int getSizeContact(){
 		 int i = setContact.size(); 
-		//int i = setMeeting.size();
 		 return i;
 	}
+	
+	public int getSizeMeeting(){ 
+		int i = setMeeting.size();
+		return i;
+	}
+	
+	/********************** TEST END *********TO BE DELETED AFTER TEST RUN VALIDATION As well as in the interface****************/
 
 }
