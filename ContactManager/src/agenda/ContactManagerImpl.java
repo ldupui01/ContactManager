@@ -217,7 +217,9 @@ public class ContactManagerImpl implements ContactManager {
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				if (obj.getContacts().contains(contact)) lm.add(obj);
+				if(obj.getClass() == FutureMeetingImpl.class){
+					if (obj.getContacts().contains(contact)) lm.add(obj);
+				}
 			}
 		}
 		Collections.sort(lm, new Chronology());
@@ -234,7 +236,9 @@ public class ContactManagerImpl implements ContactManager {
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				if (obj.getDate().equals(date)) lm.add(obj);
+				if(obj.getClass() == FutureMeetingImpl.class){
+					if (obj.getDate().equals(date)) lm.add(obj);
+				}
 			}
 		}
 		
@@ -255,7 +259,9 @@ public class ContactManagerImpl implements ContactManager {
 			Iterator<Meeting> it = setMeeting.iterator();
 			while (it.hasNext()){
 				Meeting obj = it.next();
-				if (obj.getContacts().contains(contact)) lm.add((PastMeeting) obj);
+				if(obj.getClass() == PastMeetingImpl.class){
+					if (obj.getContacts().contains(contact)) lm.add((PastMeeting) obj);
+				}
 			}
 		}
 		Collections.sort(lm, new Chronology());
